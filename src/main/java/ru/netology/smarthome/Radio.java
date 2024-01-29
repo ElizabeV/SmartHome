@@ -3,32 +3,53 @@ package ru.netology.smarthome;
 public class Radio {
     private int currentStation; //поле
     private int currentVolume;  //поле
+    private int maxStation;
+    private int minStation = 0;
+    private int amountStation;
+
+    public Radio(int amountStation) {
+        this.amountStation = amountStation;
+        maxStation = amountStation - 1;
+    }
+
+    public Radio() {
+        amountStation = 10;
+        maxStation = amountStation - 1;
+    }
+
+    public int getAmountStation() {
+        return amountStation;
+    }
+
+    public int getMaxStation() {
+        return maxStation;
+    }
 
     public int getCurrentStation() {
         return currentStation;
     }
 
     public void setCurrentStation(int newCurrentStation) { //поменять, установить на новую
-        if (newCurrentStation < 0) {
+        if (newCurrentStation < minStation) {
             return;
         }
-        if (newCurrentStation > 9) {
+        if (newCurrentStation > maxStation) {
             return;
         }
         currentStation = newCurrentStation;
     }
 
     public void next() {
-        if (currentStation == 9) {
-            setCurrentStation(0);
+        if (currentStation == maxStation) {
+            setCurrentStation(minStation);
         } else {
             setCurrentStation(currentStation + 1);
         }
     }
 
     public void prev() {
-        if (currentStation == 0) {
-            setCurrentStation(9);
+        if (currentStation == minStation) {
+            setCurrentStation(maxStation);
         } else {
             setCurrentStation(currentStation - 1);
         }
@@ -38,7 +59,7 @@ public class Radio {
         return currentVolume;
     }
 
-     public void setCurrentVolume(int newCurrentVolume) { //установи громкость на (параметр)
+    public void setCurrentVolume(int newCurrentVolume) { //установи громкость на (параметр)
         if (newCurrentVolume < 0) { //проверки
             return;
         }
